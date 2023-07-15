@@ -1,6 +1,7 @@
 package enterprises.iridian.di.target;
 
 import enterprises.iridian.di.Literal;
+import enterprises.iridian.di.target.exception.InvalidTargetPointException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InaccessibleObjectException;
 
@@ -20,8 +21,7 @@ public final class FieldTarget extends Target<Field> {
     } catch (final InaccessibleObjectException |
                    SecurityException |
                    IllegalAccessException exception) {
-      // TODO: Exception type
-      throw new RuntimeException(exception);
+      throw new InvalidTargetPointException(point, exception);
     }
 
     return instance;

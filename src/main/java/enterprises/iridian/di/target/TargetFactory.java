@@ -1,6 +1,7 @@
 package enterprises.iridian.di.target;
 
 import enterprises.iridian.di.Literal;
+import enterprises.iridian.di.target.exception.InvalidTargetPointException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,8 +26,7 @@ public final class TargetFactory {
     } else if (point instanceof final Method method) {
       POINT_TO_TARGET_CACHE.put(point, new MethodTarget(method, Literal.of(method)));
     } else {
-      // TODO: Exception type
-      throw new RuntimeException();
+      throw new InvalidTargetPointException(point);
     }
 
     return POINT_TO_TARGET_CACHE.get(point);

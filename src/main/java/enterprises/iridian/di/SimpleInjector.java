@@ -1,10 +1,14 @@
 package enterprises.iridian.di;
 
+import enterprises.iridian.di.exception.InvalidLiteralTypeException;
+import enterprises.iridian.di.exception.NoSuchProviderException;
 import enterprises.iridian.di.scan.ConstructorScanner;
 import enterprises.iridian.di.scan.FieldScanner;
 import enterprises.iridian.di.scan.MethodScanner;
+import enterprises.iridian.di.scan.exception.MissingConstructorException;
 import enterprises.iridian.di.target.Target;
 import enterprises.iridian.di.target.TargetFactory;
+import enterprises.iridian.di.target.exception.InvalidTargetPointException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -55,7 +59,7 @@ public final class SimpleInjector implements Injector {
   @Override
   public <T> Provider<T> resolveProvider(final Literal<?> literal) {
     if (!literalToProvider.containsKey(literal)) {
-      return null;
+      throw new NoSuchProviderException(literal);
     }
 
     return (Provider<T>) literalToProvider.get(literal);
@@ -64,15 +68,24 @@ public final class SimpleInjector implements Injector {
   @SuppressWarnings("unchecked")
   @Override
   public <T> T resolveBean(final Literal<?> literal) {
-    final Provider<T> provider = resolveProvider(literal);
-    final T bean;
-    if (provider != null) {
-      bean = provider.get();
-    } else {
-      bean = (T) create(literal.typeClass);
+    try {
+      final Provider<T> provider = resolveProvider(literal);
+      final T bean = provider.get();
+      if (bean != null) {
+        return bean;
+      } else {
+        throw new NullPointerException();
+      }
+    } catch (final NoSuchProviderException providerException) {
+      try {
+        return (T) create(literal.typeClass);
+      } catch (final MissingConstructorException |
+                     InvalidLiteralTypeException |
+                     InvalidTargetPointException |
+                     NoSuchProviderException exception) {
+        throw providerException;
+      }
     }
-
-    return bean;
   }
 
   private Object[] resolveBeans(final Literal<?> literal) {

@@ -1,5 +1,6 @@
 package enterprises.iridian.di;
 
+import enterprises.iridian.di.exception.InvalidLiteralTypeException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -84,8 +85,7 @@ public abstract class Literal<T> {
       return parameterizedType.getActualTypeArguments()[0];
     }
 
-    // TODO: Exception type
-    throw new RuntimeException();
+    throw new InvalidLiteralTypeException(type);
   }
 
   @SuppressWarnings("unchecked")
@@ -96,8 +96,7 @@ public abstract class Literal<T> {
       return (Class<T>) parameterizedType.getRawType();
     }
 
-    // TODO: Exception type
-    throw new RuntimeException();
+    throw new InvalidLiteralTypeException(type);
   }
 
   private static Literal<?>[] resolveTypeParameters(final Type type) {

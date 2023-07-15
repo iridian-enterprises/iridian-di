@@ -1,6 +1,7 @@
 package enterprises.iridian.di.target;
 
 import enterprises.iridian.di.Literal;
+import enterprises.iridian.di.target.exception.InvalidTargetPointException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
@@ -21,8 +22,7 @@ public final class ConstructorTarget extends Target<Constructor<?>> {
                    InstantiationException |
                    IllegalAccessException |
                    InvocationTargetException exception) {
-      // TODO: Exception type
-      throw new RuntimeException(exception);
+      throw new InvalidTargetPointException(point, exception);
     }
   }
 }

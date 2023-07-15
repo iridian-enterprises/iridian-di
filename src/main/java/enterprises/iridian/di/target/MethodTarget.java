@@ -1,6 +1,7 @@
 package enterprises.iridian.di.target;
 
 import enterprises.iridian.di.Literal;
+import enterprises.iridian.di.target.exception.InvalidTargetPointException;
 import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,7 +21,7 @@ public final class MethodTarget extends Target<Method> {
                    SecurityException |
                    IllegalAccessException |
                    InvocationTargetException exception) {
-      throw new RuntimeException(exception);
+      throw new InvalidTargetPointException(point, exception);
     }
 
     return instance;
