@@ -1,0 +1,6 @@
+plugins {
+    id 'java'
+}
+
+group = 'enterprises.iridian'
+version = '0.1.0'
