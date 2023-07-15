@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -94,6 +95,8 @@ public abstract class Literal<T> {
       return (Class<T>) type;
     } else if (type instanceof final ParameterizedType parameterizedType) {
       return (Class<T>) parameterizedType.getRawType();
+    } else if (type instanceof final WildcardType wildcardType) {
+      return (Class<T>) wildcardType.getUpperBounds()[0];
     }
 
     throw new InvalidLiteralTypeException(type);
