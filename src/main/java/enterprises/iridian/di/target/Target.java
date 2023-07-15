@@ -8,7 +8,7 @@ public abstract sealed class Target<T> permits ConstructorTarget, FieldTarget, M
   public final T point;
   public final Literal<?> literal;
 
-  public Target(final T point, final Literal<?> literal) {
+  protected Target(final T point, final Literal<?> literal) {
     this.point = point;
     this.literal = literal;
   }
