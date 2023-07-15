@@ -18,8 +18,5 @@ public interface Injector {
 
   <T> Provider<T> resolveProvider(final Literal<?> literal);
 
-  default <T> T resolveBean(final Literal<?> literal) {
-    final Provider<T> provider = resolveProvider(literal);
-    return provider.get();
-  }
+  <T> T resolveBean(final Literal<?> literal);
 }

@@ -55,11 +55,24 @@ public final class SimpleInjector implements Injector {
   @Override
   public <T> Provider<T> resolveProvider(final Literal<?> literal) {
     if (!literalToProvider.containsKey(literal)) {
-      // TODO: Exception type
-      throw new RuntimeException();
+      return null;
     }
 
     return (Provider<T>) literalToProvider.get(literal);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public <T> T resolveBean(final Literal<?> literal) {
+    final Provider<T> provider = resolveProvider(literal);
+    final T bean;
+    if (provider != null) {
+      bean = provider.get();
+    } else {
+      bean = (T) create(literal.typeClass);
+    }
+
+    return bean;
   }
 
   private Object[] resolveBeans(final Literal<?> literal) {
