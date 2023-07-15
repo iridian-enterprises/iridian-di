@@ -13,6 +13,8 @@ public abstract sealed class Target<T> permits ConstructorTarget, FieldTarget, M
     this.literal = literal;
   }
 
+  public abstract Object inject(final Object instance, final Object... beans);
+
   @Override
   public final boolean equals(final Object other) {
     if (this == other) {
