@@ -31,7 +31,8 @@ public final class SimpleInjector implements Injector {
 
   @SuppressWarnings("unchecked")
   public <T> T create(final Class<T> typeClass) {
-    final List<? extends Target<?>> constructorTargets = sortConstructors(constructorScanner.scan(typeClass));
+    final List<? extends Target<?>> constructorTargets = sortConstructors(
+        constructorScanner.scan(typeClass));
     final Target<?> constructorTarget = constructorTargets.get(0);
     final Object[] constructorBeans = resolveBeans(constructorTarget.literal);
     final Object instance = constructorTarget.inject(null, constructorBeans);
