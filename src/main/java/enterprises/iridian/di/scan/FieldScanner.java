@@ -1,6 +1,7 @@
 package enterprises.iridian.di.scan;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -13,6 +14,10 @@ public final class FieldScanner implements Scanner<Field> {
 
     for (final Field field : typeClass.getDeclaredFields()) {
       if (!field.isAnnotationPresent(Inject.class)) {
+        continue;
+      }
+
+      if (Modifier.isFinal(field.getModifiers())) {
         continue;
       }
 
