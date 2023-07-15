@@ -19,6 +19,16 @@ public final class ConstructorScanner implements Scanner<Constructor<?>> {
       constructors.add(constructor);
     }
 
+    if (constructors.isEmpty()) {
+      try {
+        final Constructor<?> constructor = typeClass.getDeclaredConstructor();
+        constructors.add(constructor);
+      } catch (final NoSuchMethodException exception) {
+        // TODO: Exception type
+        throw new RuntimeException(exception);
+      }
+    }
+
     return constructors;
   }
 }
