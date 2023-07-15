@@ -1,5 +1,6 @@
 package enterprises.iridian.di;
 
+import java.util.List;
 import javax.inject.Inject;
 
 final class Bar {
@@ -19,8 +20,12 @@ final class Bar {
     this.stringFoo = stringFoo;
   }
 
+  List<Integer> baz(final int x, final int y) {
+    return List.of();
+  }
+
   @Inject
-  void baz(final double quz) {
+  void quz(final double quz) {
     this.quz = quz;
   }
 }
