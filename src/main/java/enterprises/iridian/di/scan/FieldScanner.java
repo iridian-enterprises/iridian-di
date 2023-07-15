@@ -8,10 +8,10 @@ import javax.inject.Inject;
 public final class FieldScanner implements Scanner<Field> {
 
   @Override
-  public List<Field> scan(final Class<?> type) {
+  public List<Field> scan(final Class<?> typeClass) {
     final List<Field> fields = new ArrayList<>();
 
-    for (final Field field : type.getDeclaredFields()) {
+    for (final Field field : typeClass.getDeclaredFields()) {
       if (!field.isAnnotationPresent(Inject.class)) {
         continue;
       }

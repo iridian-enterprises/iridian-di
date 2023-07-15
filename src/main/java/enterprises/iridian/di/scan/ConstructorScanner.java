@@ -8,10 +8,10 @@ import javax.inject.Inject;
 public final class ConstructorScanner implements Scanner<Constructor<?>> {
 
   @Override
-  public List<Constructor<?>> scan(final Class<?> type) {
+  public List<Constructor<?>> scan(final Class<?> typeClass) {
     final List<Constructor<?>> constructors = new ArrayList<>();
 
-    for (final Constructor<?> constructor : type.getDeclaredConstructors()) {
+    for (final Constructor<?> constructor : typeClass.getDeclaredConstructors()) {
       if (!constructor.isAnnotationPresent(Inject.class)) {
         continue;
       }
