@@ -31,10 +31,8 @@ public final class SimpleInjector implements Injector {
 
   @SuppressWarnings("unchecked")
   public <T> T create(final Class<T> typeClass) {
-    final List<Constructor<?>> constructors = constructorScanner.scan(typeClass);
-    // TODO: Find "best" constructor, sort by number of beans satisfied
-    final Constructor<?> constructor = constructors.get(0);
-    final Target<?> constructorTarget = TargetFactory.makeTarget(constructor);
+    final List<? extends Target<?>> constructorTargets = sortConstructors(constructorScanner.scan(typeClass));
+    final Target<?> constructorTarget = constructorTargets.get(0);
     final Object[] constructorBeans = resolveBeans(constructorTarget.literal);
     final Object instance = constructorTarget.inject(null, constructorBeans);
 
@@ -86,6 +84,33 @@ public final class SimpleInjector implements Injector {
         throw providerException;
       }
     }
+  }
+
+  private List<? extends Target<?>> sortConstructors(final List<Constructor<?>> constructors) {
+    return constructors.stream()
+        .map(TargetFactory::makeTarget)
+        .sorted(this::sortByNumberOfSatisfiedBeans)
+        .toList();
+  }
+
+  public int sortByNumberOfSatisfiedBeans(final Target<?> rhs, final Target<?> lhs) {
+    return getNumberOfSatisfiedBeans(lhs.literal) - getNumberOfSatisfiedBeans(rhs.literal);
+  }
+
+  private int getNumberOfSatisfiedBeans(final Literal<?> literal) {
+    int satisfiedBeans = 0;
+    for (final Literal<?> typeParameter : literal.typeParameters) {
+      if (literalToProvider.containsKey(typeParameter)) {
+        satisfiedBeans++;
+      } else {
+        try {
+          create(literal.typeClass);
+          satisfiedBeans++;
+        } catch (final Exception ignored) {
+        }
+      }
+    }
+    return satisfiedBeans;
   }
 
   private Object[] resolveBeans(final Literal<?> literal) {
