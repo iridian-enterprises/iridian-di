@@ -1,8 +1,25 @@
 package enterprises.iridian.di;
 
+import java.util.List;
 import javax.inject.Provider;
 
 public interface Injector {
+
+  default void bind(final Module... modules) {
+    for (final Module module : modules) {
+      bind(module);
+    }
+  }
+
+  default void bind(final List<Module> modules) {
+    for (final Module module : modules) {
+      bind(module);
+    }
+  }
+
+  default void bind(final Module module) {
+    module.bind(this);
+  }
 
   <T> void bind(final Literal<T> literal, final Provider<T> provider);
 
