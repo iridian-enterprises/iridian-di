@@ -50,6 +50,16 @@ final class SimpleInjectorTest {
     assertEquals(quzValue, bar.quz);
   }
 
+  @Test
+  void createCreatesBeansIfNotBound() {
+    final Z z = new Z();
+    injector.bind(new Literal<Z>() {}).toSingleton(z);
+
+    final X x = injector.create(X.class);
+    assertNotNull(x.y);
+    assertEquals(z, x.y.z);
+  }
+
   void bindBeansForBar(final Foo<String> stringFoo, final int integerFooValue, final double quz) {
     injector.bind(new Literal<Foo<String>>() {}).toSingleton(stringFoo);
     injector.bind(new Literal<Foo<Integer>>() {}).toProvider(() -> new Foo<>(integerFooValue));
