@@ -1,10 +1,11 @@
 package enterprises.iridian.di.scan;
 
 import enterprises.iridian.di.scan.exception.MissingConstructorException;
+
+import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 
 public final class ConstructorScanner implements Scanner<Constructor<?>> {
 
