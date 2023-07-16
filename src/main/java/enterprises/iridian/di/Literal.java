@@ -1,18 +1,12 @@
 package enterprises.iridian.di;
 
 import enterprises.iridian.di.exception.InvalidLiteralTypeException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.WildcardType;
+
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class Literal<T> {
-
   public final Type type;
   public final Class<T> typeClass;
   public final Literal<?>[] typeParameters;
@@ -64,23 +58,28 @@ public abstract class Literal<T> {
   }
 
   public static Literal<?> of(final Type type) {
-    return new Literal<>(type) {};
+    return new Literal<>(type) {
+    };
   }
 
   public static <T> Literal<T> of(final Class<T> type) {
-    return new Literal<>(type) {};
+    return new Literal<>(type) {
+    };
   }
 
   public static Literal<?> of(final Field field) {
-    return new Literal<>(field) {};
+    return new Literal<>(field) {
+    };
   }
 
   public static Literal<?> of(final Constructor<?> constructor) {
-    return new Literal<>(constructor) {};
+    return new Literal<>(constructor) {
+    };
   }
 
   public static Literal<?> of(final Method method) {
-    return new Literal<>(method) {};
+    return new Literal<>(method) {
+    };
   }
 
   private static Type resolveSuperType(final Type type) {
@@ -114,7 +113,8 @@ public abstract class Literal<T> {
       final int length = arguments.length;
       final Literal<?>[] literals = new Literal<?>[length];
       for (int i = 0; i < length; ++i) {
-        literals[i] = new Literal<>(arguments[i]) {};
+        literals[i] = new Literal<>(arguments[i]) {
+        };
       }
       return literals;
     }
@@ -133,7 +133,8 @@ public abstract class Literal<T> {
   private static Literal<?>[] resolveTypeParameters(final Parameter[] parameters) {
     final Literal<?>[] literals = new Literal<?>[parameters.length];
     for (int i = 0; i < parameters.length; ++i) {
-      literals[i] = new Literal<>(parameters[i].getParameterizedType()) {};
+      literals[i] = new Literal<>(parameters[i].getParameterizedType()) {
+      };
     }
     return literals;
   }
@@ -150,8 +151,8 @@ public abstract class Literal<T> {
 
     if (other instanceof final Literal<?> literal) {
       return Objects.equals(type, literal.type) &&
-          Objects.equals(typeClass, literal.typeClass) &&
-          Arrays.equals(typeParameters, literal.typeParameters);
+        Objects.equals(typeClass, literal.typeClass) &&
+        Arrays.equals(typeParameters, literal.typeParameters);
     }
 
     return false;

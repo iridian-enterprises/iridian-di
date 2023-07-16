@@ -3,7 +3,6 @@ package enterprises.iridian.di;
 import javax.inject.Provider;
 
 public final class Binder<T> {
-
   private final Injector injector;
   private final Literal<T> literal;
 

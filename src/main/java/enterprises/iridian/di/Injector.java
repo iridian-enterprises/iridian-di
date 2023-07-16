@@ -3,7 +3,6 @@ package enterprises.iridian.di;
 import javax.inject.Provider;
 import java.util.Arrays;
 import java.util.List;
-import javax.inject.Provider;
 
 public interface Injector {
 

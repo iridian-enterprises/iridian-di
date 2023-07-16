@@ -1,10 +1,10 @@
 package enterprises.iridian.di.target;
 
 import enterprises.iridian.di.Literal;
+
 import java.util.Objects;
 
 public abstract sealed class Target<T> permits ConstructorTarget, FieldTarget, MethodTarget {
-
   public final T point;
   public final Literal<?> literal;
 
@@ -27,7 +27,7 @@ public abstract sealed class Target<T> permits ConstructorTarget, FieldTarget, M
 
     if (other instanceof final Target<?> target) {
       return Objects.equals(point, target.point) &&
-          Objects.equals(literal, target.literal);
+        Objects.equals(literal, target.literal);
     }
 
     return false;
