@@ -63,6 +63,10 @@ public abstract class Literal<T> {
     this.typeParameters = resolveTypeParameters(method);
   }
 
+  public static Literal<?> of(final Type type) {
+    return new Literal<>(type) {};
+  }
+
   public static <T> Literal<T> of(final Class<T> type) {
     return new Literal<>(type) {};
   }
