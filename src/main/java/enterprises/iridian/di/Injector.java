@@ -26,17 +26,17 @@ public interface Injector {
     return bind(Literal.of(typeClass));
   }
 
-  default void bind(final Module module) {
+  default void bindModule(final Module module) {
     module.bind(this);
   }
 
-  default void bind(final Module... modules) {
-    bind(Arrays.asList(modules));
+  default void bindModules(final Module... modules) {
+    bindModules(Arrays.asList(modules));
   }
 
-  default void bind(final List<Module> modules) {
+  default void bindModules(final List<Module> modules) {
     for (final Module module : modules) {
-      bind(module);
+      bindModule(module);
     }
   }
 }
