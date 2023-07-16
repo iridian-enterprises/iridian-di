@@ -2,9 +2,7 @@ package enterprises.iridian.di;
 
 import enterprises.iridian.di.exception.InvalidLiteralTypeException;
 import enterprises.iridian.di.exception.NoSuchProviderException;
-import enterprises.iridian.di.scan.ConstructorScanner;
-import enterprises.iridian.di.scan.FieldScanner;
-import enterprises.iridian.di.scan.MethodScanner;
+import enterprises.iridian.di.scan.*;
 import enterprises.iridian.di.scan.exception.MissingConstructorException;
 import enterprises.iridian.di.target.Target;
 import enterprises.iridian.di.target.TargetFactory;
@@ -21,9 +19,19 @@ import java.util.Map;
 public final class SimpleInjector implements Injector {
   private final Map<Literal<?>, Provider<?>> literalToProvider = new HashMap<>();
 
-  private final FieldScanner fieldScanner = new FieldScanner();
-  private final ConstructorScanner constructorScanner = new ConstructorScanner();
-  private final MethodScanner methodScanner = new MethodScanner();
+  private final ConstructorScanner constructorScanner;
+  private final FieldScanner fieldScanner;
+  private final MethodScanner methodScanner;
+
+  public SimpleInjector() {
+    this(new SimpleConstructorScanner(), new SimpleFieldScanner(), new SimpleMethodScanner());
+  }
+
+  public SimpleInjector(final ConstructorScanner constructorScanner, final FieldScanner fieldScanner, final MethodScanner methodScanner) {
+    this.constructorScanner = constructorScanner;
+    this.fieldScanner = fieldScanner;
+    this.methodScanner = methodScanner;
+  }
 
   @Override
   public void bindLoose(final Literal<?> literal, final Provider<?> provider) {
