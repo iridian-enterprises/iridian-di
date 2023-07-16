@@ -21,7 +21,11 @@ public interface Injector {
     module.bind(this);
   }
 
-  <T> void bind(final Literal<T> literal, final Provider<T> provider);
+  default <T> void bind(final Literal<T> literal, final Provider<T> provider) {
+    bindLoose(literal, provider);
+  }
+
+  void bindLoose(final Literal<?> literal, final Provider<?> provider);
 
   default <T> Binder<T> bind(final Literal<T> literal) {
     return new Binder<>(this, literal);
