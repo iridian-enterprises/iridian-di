@@ -27,7 +27,7 @@ public interface Injector {
     return bind(Literal.of(typeClass));
   }
 
-  default void bind(final Module module) {
+  default void bindModule(final Module module) {
     module.bind(this);
   }
 
@@ -37,7 +37,7 @@ public interface Injector {
 
   default void bind(final List<Module> modules) {
     for (final Module module : modules) {
-      bind(module);
+      bindModule(module);
     }
   }
 }
