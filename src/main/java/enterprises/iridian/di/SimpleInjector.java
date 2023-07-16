@@ -25,7 +25,8 @@ public final class SimpleInjector implements Injector {
   private final ConstructorScanner constructorScanner = new ConstructorScanner();
   private final MethodScanner methodScanner = new MethodScanner();
 
-  public <T> void bind(final Literal<T> literal, final Provider<T> provider) {
+  @Override
+  public void bindLoose(final Literal<?> literal, final Provider<?> provider) {
     literalToProvider.put(literal, provider);
   }
 
