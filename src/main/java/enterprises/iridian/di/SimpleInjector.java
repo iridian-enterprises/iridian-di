@@ -7,16 +7,16 @@ import enterprises.iridian.di.scan.exception.MissingConstructorException;
 import enterprises.iridian.di.target.Target;
 import enterprises.iridian.di.target.TargetFactory;
 import enterprises.iridian.di.target.exception.InvalidTargetPointException;
+
+import javax.inject.Provider;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Provider;
 
 public final class SimpleInjector implements Injector {
-
   private final Map<Literal<?>, Provider<?>> literalToProvider = new HashMap<>();
 
   private final ConstructorScanner constructorScanner;
@@ -41,7 +41,7 @@ public final class SimpleInjector implements Injector {
   @SuppressWarnings("unchecked")
   public <T> T create(final Class<T> typeClass) {
     final List<? extends Target<?>> constructorTargets = sortConstructors(
-        constructorScanner.scan(typeClass));
+      constructorScanner.scan(typeClass));
     final Target<?> constructorTarget = constructorTargets.get(0);
     final Object[] constructorBeans = resolveBeans(constructorTarget.literal);
     final Object instance = constructorTarget.inject(null, constructorBeans);
@@ -98,9 +98,9 @@ public final class SimpleInjector implements Injector {
 
   private List<? extends Target<?>> sortConstructors(final List<Constructor<?>> constructors) {
     return constructors.stream()
-        .map(TargetFactory::makeTarget)
-        .sorted(this::sortByNumberOfSatisfiedBeans)
-        .toList();
+      .map(TargetFactory::makeTarget)
+      .sorted(this::sortByNumberOfSatisfiedBeans)
+      .toList();
   }
 
   public int sortByNumberOfSatisfiedBeans(final Target<?> rhs, final Target<?> lhs) {
