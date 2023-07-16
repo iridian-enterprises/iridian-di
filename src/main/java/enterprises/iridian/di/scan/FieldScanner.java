@@ -1,10 +1,10 @@
 package enterprises.iridian.di.scan;
 
+import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 
 public final class FieldScanner implements Scanner<Field> {
 

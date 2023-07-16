@@ -1,8 +1,8 @@
 package enterprises.iridian.di;
 
+import javax.inject.Singleton;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.inject.Singleton;
 
 public abstract class Module {
 
@@ -22,7 +22,7 @@ public abstract class Module {
   }
 
   private void bindSingleton(final Injector injector, final Method method,
-      final Literal<?> literal) {
+                             final Literal<?> literal) {
     final Object instance;
     try {
       instance = method.invoke(this);

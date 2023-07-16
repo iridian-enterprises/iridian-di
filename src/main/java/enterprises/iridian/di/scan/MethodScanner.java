@@ -1,9 +1,9 @@
 package enterprises.iridian.di.scan;
 
+import javax.inject.Inject;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 
 public final class MethodScanner implements Scanner<Method> {
 

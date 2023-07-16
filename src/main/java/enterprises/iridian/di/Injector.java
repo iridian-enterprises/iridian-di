@@ -1,7 +1,7 @@
 package enterprises.iridian.di;
 
-import java.util.List;
 import javax.inject.Provider;
+import java.util.List;
 
 public interface Injector {
 
