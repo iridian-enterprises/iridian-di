@@ -31,11 +31,11 @@ public interface Injector {
     module.bind(this);
   }
 
-  default void bind(final Module... modules) {
-    bind(Arrays.asList(modules));
+  default void bindModules(final Module... modules) {
+    bindModules(Arrays.asList(modules));
   }
 
-  default void bind(final List<Module> modules) {
+  default void bindModules(final List<Module> modules) {
     for (final Module module : modules) {
       bindModule(module);
     }
